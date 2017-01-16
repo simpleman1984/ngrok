@@ -1,0 +1,48 @@
+下载源码
+git clone https://github.com/inconshreveable/ngrok.git ngrok
+cd ngrok
+
+替换log4go!!!!!!
+/usr/local/src/ngrok/src/ngrok/log/logger.go
+第五行import中的 log 包，改为：
+log "github.com/keepeye/log4go"
+
+生成证书
+openssl genrsa -out base.key 2048
+openssl req -new -x509 -nodes -key base.key -days 10000 -subj "/CN=test.emooc.com" -out base.pem
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -subj "/CN=test.emooc.com" -out server.csr
+openssl x509 -req -in server.csr -CA base.pem -CAkey base.key -CAcreateserial -days 10000 -out server.crt
+
+如下证书
+- base.key
+- base.pem
+- base.srl
+- server.crt
+- server.csr
+- server.key
+
+复制客户端证书
+cp base.pem ngrok/assets/client/tls/ngrokroot.crt
+
+编译
+cd ngrok/
+GOOS=linux GOARCH=amd64 make release-server release-client
+GOOS=linux GOARCH=386 make release-server release-client
+GOOS=windows GOARCH=amd64 make release-server release-client
+GOOS=windows GOARCH=386 make release-server release-client
+
+==》mac环境
+cd /usr/local/go/src
+GOOS=darwin GOARCH=amd64 ./make.bash    
+cd -
+GOOS=darwin GOARCH=amd64 make release-server release-client  MAC环境
+
+启动服务端
+./ngrokd -tlsKey=server.key -tlsCrt=server.crt -domain="[NGROK_BASE_DOMAIN]" -httpAddr=":8080" -httpsAddr=":8081"
+
+
+
+参考网站
+http://www.ekan001.com/articles/38
+http://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/
