@@ -1,5 +1,5 @@
-set path=%path%;E:\0000____OpenSourceProject\Go\bin;D:\worksoftware\Go\bin
-set GOROOT=E:\0000____OpenSourceProject\Go
+set path=%path%;D:\01____xuaihua\0000____OpenSourceProject\go\bin
+set GOROOT=D:\01____xuaihua\0000____OpenSourceProject\go
 set GOPATH=%cd%
 go install -tags release ngrok/main/ngrokd
 go install -tags release ngrok/main/ngrok
