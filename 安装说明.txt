@@ -31,6 +31,8 @@ GOOS=linux GOARCH=amd64 make release-server release-client
 GOOS=linux GOARCH=386 make release-server release-client
 GOOS=windows GOARCH=amd64 make release-server release-client
 GOOS=windows GOARCH=386 make release-server release-client
+GOOS=darwin GOARCH=amd64 make release-server release-client
+GOOS=darwin GOARCH=386 make release-server release-client
 
 ==¡·mac»·¾³
 cd /usr/local/go/src
